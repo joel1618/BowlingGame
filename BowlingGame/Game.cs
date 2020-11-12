@@ -1,22 +1,26 @@
 ﻿using BowlingGame;
+using System.Collections.Generic;
 
-namespace Namespace_1
+namespace BowlingGame
 {
-    public class Class1
+    public class Game
     {
         // initializes rolls array
-        public int[] rolls = new int[21];
-        // initializes roll
-        private int currentRoll = 0;
+        private List<int> rolls = new List<int>();
 
+        Calculator calculator;
+        public Game(Calculator calculator)
+        {
+            this.calculator = calculator;
+        }
         /// <summary>
-        /// Adds a role
+        /// Adds a roll
         /// </summary>
         /// <param name="pins"></param>
         /// <param name="roll"></param>
         public void Roll(int pins)
         {
-            rolls[currentRoll++] = pins;
+            rolls.Add(pins);
         }
 
         /// <summary>
@@ -25,11 +29,7 @@ namespace Namespace_1
         /// <returns>the score</returns>
         public int Score()
         {
-            Calculator calculator = Calculator.GetRollCalculator(rolls);
-
-            var score = 0;
-            calculator.GetScoreForAllRollsInGame(ref score);
-
+            var score = calculator.GetScore(this.rolls);
             return score;
         }
     }
